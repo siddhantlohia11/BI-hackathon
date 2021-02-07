@@ -73,10 +73,9 @@ app.get('/check', function (req, res) {
   res.json({body: JSON.stringify(arr)});
 })
 
-
-// app.get('/change', function (req, res) {
-//   res.json({body: JSON.stringify(arr.slice(1, 3))});
-// })
+app.post("/uploadImage", function(req,res){
+	res.json("Found");
+})
 
 
  
