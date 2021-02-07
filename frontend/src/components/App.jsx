@@ -1,11 +1,21 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import axios from "axios";
 import Footer from "./Footer";
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
-import { photos } from "./photos";
 import NavBar from "./Navbar.jsx";
 
+
 function App() {
+  useEffect(() => {
+    axios.get('/api/get')
+      .then(res => setState(JSON.parse(res.data.body)))
+  }, []);
+
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  console.log(searchTerm);
+  const [state, setState] = useState([])
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
@@ -21,18 +31,25 @@ function App() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar onChange={(value) => setSearchTerm(value)} />
       <div>
-        <Gallery photos={photos} onClick={openLightbox} />
+        <Gallery photos={state.filter((val) => {
+          if(searchTerm == ""){
+            return val
+          } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+            return val;
+          }
+        })} onClick={openLightbox} />
         <ModalGateway>
           {viewerIsOpen ? (
             <Modal onClose={closeLightbox}>
               <Carousel
                 currentIndex={currentImage}
-                views={photos.map((x) => ({
+                caption="Sid"
+                views={state.map((x) => ({
                   ...x,
                   srcset: x.srcSet,
-                  caption: x.title
+                  caption: "Description: " + x.title + " || Keys are: " + x.wordset,
                 }))}
               />
             </Modal>
