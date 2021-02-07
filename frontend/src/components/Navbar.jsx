@@ -12,11 +12,13 @@ function NavBar(props) {
     setImage(event.target.files[0])
   } 
   const fileUploadHandler = (event) => {
+    console.log("aaya");
+    console.log(image);
     const fd = new FormData();
     fd.append('image', image, image.name);
-    axios.post('/uploadImage',fd)
+    axios.post("/api/upload/",fd)
     .then(res => {
-      console.log(res);
+      console.log(res.data);
     });
   } 
   
