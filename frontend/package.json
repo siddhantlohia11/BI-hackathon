@@ -4,6 +4,7 @@
   "description": "example using react-images Lightbox component",
   "keywords": [],
   "main": "index.js",
+  "proxy": "http://65.1.43.217",
   "dependencies": {
     "navbar": "2.1.0",
     "react": "16.8.6",
