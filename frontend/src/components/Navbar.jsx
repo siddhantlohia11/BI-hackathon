@@ -1,12 +1,25 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Form, FormControl, Button, Modal } from "react-bootstrap";
 import ImageUploader from "react-images-upload";
+import axios from "axios";
 
-function NavBar() {
+function NavBar(props) {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [image, setImage] = useState(null);
+  const fileSelectHandler = (event) => {
+    setImage(event.target.files[0])
+  } 
+  const fileUploadHandler = (event) => {
+    const fd = new FormData();
+    fd.append('image', image, image.name);
+    axios.post('/uploadImage',fd)
+    .then(res => {
+      console.log(res);
+    });
+  } 
+  
   return (
     <Navbar style={{ marginBottom: 20 }} bg="light" expand="lg">
       <Navbar.Brand href="#home">Team Name</Navbar.Brand>
@@ -14,8 +27,6 @@ function NavBar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="#home">Home</Nav.Link>
-          {/* <Nav.Link href="#link">Upload</Nav.Link> */}
-
           <Nav.Link href="#link">About us</Nav.Link>
           <Nav.Link href="#link">Contact us</Nav.Link>
         </Nav>
@@ -29,6 +40,7 @@ function NavBar() {
             type="text"
             placeholder="Search Images"
             className="mr-sm-2"
+            onChange={(event) => props.onChange(event.target.value)}
           />
           <Button variant="outline-success">Search</Button>
         </Form>
@@ -45,22 +57,14 @@ function NavBar() {
         </Modal.Header>
         <Modal.Body>
           <div style={{ marginRight: "15px" }}>
-            <ImageUploader
-              withIcon={false}
-              withPreview={true}
-              label=""
-              buttonText="Upload Images"
-              imgExtension={[".jpg", ".gif", ".png", ".gif", ".svg"]}
-              maxFileSize={1048576}
-              fileSizeError=" file size is too big"
-            />
+            <input type="file" onChange={fileSelectHandler} />
           </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary">Upload</Button>
+          <Button variant="primary" onClick={fileUploadHandler}>Upload</Button>
         </Modal.Footer>
       </Modal>
     </Navbar>
