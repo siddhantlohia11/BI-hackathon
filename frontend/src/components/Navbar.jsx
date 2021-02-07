@@ -1,0 +1,70 @@
+import React, { useState } from "react";
+import { Navbar, Nav, Form, FormControl, Button, Modal } from "react-bootstrap";
+import ImageUploader from "react-images-upload";
+
+function NavBar() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  return (
+    <Navbar style={{ marginBottom: 20 }} bg="light" expand="lg">
+      <Navbar.Brand href="#home">Team Name</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link href="#home">Home</Nav.Link>
+          {/* <Nav.Link href="#link">Upload</Nav.Link> */}
+
+          <Nav.Link href="#link">About us</Nav.Link>
+          <Nav.Link href="#link">Contact us</Nav.Link>
+        </Nav>
+        <Form style={{ marginRight: 30 }} inline>
+          <Button variant="primary" onClick={handleShow}>
+            Upload
+          </Button>
+        </Form>
+        <Form inline>
+          <FormControl
+            type="text"
+            placeholder="Search Images"
+            className="mr-sm-2"
+          />
+          <Button variant="outline-success">Search</Button>
+        </Form>
+      </Navbar.Collapse>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Upload Image</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ marginRight: "15px" }}>
+            <ImageUploader
+              withIcon={false}
+              withPreview={true}
+              label=""
+              buttonText="Upload Images"
+              imgExtension={[".jpg", ".gif", ".png", ".gif", ".svg"]}
+              maxFileSize={1048576}
+              fileSizeError=" file size is too big"
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary">Upload</Button>
+        </Modal.Footer>
+      </Modal>
+    </Navbar>
+  );
+}
+
+export default NavBar;

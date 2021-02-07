@@ -1,0 +1,17 @@
+{
+  "name": "bi-hackathon",
+  "version": "1.0.0",
+  "description": "example using react-images Lightbox component",
+  "keywords": [],
+  "main": "index.js",
+  "dependencies": {
+    "navbar": "2.1.0",
+    "react": "16.8.6",
+    "react-bootstrap": "1.4.3",
+    "react-dom": "16.8.6",
+    "react-images": "1.0.0",
+    "react-images-upload": "1.2.8",
+    "react-photo-gallery": "8.0.0",
+    "react-router-dom": "5.2.0"
+  }
+}
